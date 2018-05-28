@@ -20,9 +20,7 @@ public class JwtUtils {
                 .claim("name", name)
                 .signWith(SignatureAlgorithm.HS256, "myPersonalSecretKey12345".getBytes("UTF-8"))
                 .compact();
-
     }
-
 
     public Map<String, Object> jwt2Map(String jwt) throws UnsupportedEncodingException {
         Jws<Claims> claim = Jwts.parser()
