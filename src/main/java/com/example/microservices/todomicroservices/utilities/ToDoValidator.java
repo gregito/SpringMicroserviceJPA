@@ -1,12 +1,14 @@
 package com.example.microservices.todomicroservices.utilities;
 
 import com.example.microservices.todomicroservices.entities.ToDo;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import static com.example.microservices.todomicroservices.utilities.Priority.HIGH;
 import static com.example.microservices.todomicroservices.utilities.Priority.LOW;
 
+@Component
 public class ToDoValidator implements Validator {
 
     @Override
