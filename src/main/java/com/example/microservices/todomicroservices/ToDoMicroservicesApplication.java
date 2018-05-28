@@ -5,6 +5,7 @@ import com.example.microservices.todomicroservices.entities.User;
 import com.example.microservices.todomicroservices.repository.ToDoDao;
 import com.example.microservices.todomicroservices.repository.UserDao;
 import com.example.microservices.todomicroservices.utilities.EncryptionUtils;
+import com.example.microservices.todomicroservices.utilities.Priority;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Date;
+
+import static com.example.microservices.todomicroservices.utilities.Priority.HIGH;
+import static com.example.microservices.todomicroservices.utilities.Priority.LOW;
 
 @SpringBootApplication
 public class ToDoMicroservicesApplication implements CommandLineRunner {
@@ -40,14 +44,14 @@ public class ToDoMicroservicesApplication implements CommandLineRunner {
         userDao.save(createUser("otheremail@someotherprovider.com", "Marco Lewis", "stonehenge"));
         userDao.save(createUser("wicked@dummy.eu", "Danzo Kim", "shifTed"));
 
-        toDoDao.save(createToDo("some microservice related description", "high", "provider.com"));
-        toDoDao.save(createToDo("spring boot comin'", "low", "provider.com"));
+        toDoDao.save(createToDo("some microservice related description", HIGH, "provider.com"));
+        toDoDao.save(createToDo("spring boot comin'", LOW, "provider.com"));
 
-        toDoDao.save(createToDo("Got some news", "high", "someotherprovider.com"));
-        toDoDao.save(createToDo("grocery", "low", "someotherprovider.com"));
+        toDoDao.save(createToDo("Got some news", HIGH, "someotherprovider.com"));
+        toDoDao.save(createToDo("grocery", HIGH, "someotherprovider.com"));
 
-        toDoDao.save(createToDo("you have to see this!", "high", "dummy.eu"));
-        toDoDao.save(createToDo("bunny stuff", "low", "dummy.eu"));
+        toDoDao.save(createToDo("you have to see this!", HIGH, "dummy.eu"));
+        toDoDao.save(createToDo("bunny stuff", LOW, "dummy.eu"));
 
         LOGGER.info("H2 database filling has finished");
     }
@@ -56,8 +60,8 @@ public class ToDoMicroservicesApplication implements CommandLineRunner {
         return new User(email, name, encryptionUtils.encrypt(password));
     }
 
-    private ToDo createToDo(String description, String priority, String user) {
-        return new ToDo(null, description, new Date(), priority, user);
+    private ToDo createToDo(String description, Priority priority, String user) {
+        return new ToDo(null, description, new Date(), priority.getLevel(), user);
     }
 
 }
