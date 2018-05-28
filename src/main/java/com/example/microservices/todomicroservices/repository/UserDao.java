@@ -1,10 +1,9 @@
 package com.example.microservices.todomicroservices.repository;
 
-import java.util.Optional;
-
+import com.example.microservices.todomicroservices.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.microservices.todomicroservices.entities.User;
+import java.util.Optional;
 
 public interface UserDao extends JpaRepository<User, String> {
 

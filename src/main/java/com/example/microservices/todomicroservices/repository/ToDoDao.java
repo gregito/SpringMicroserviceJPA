@@ -1,10 +1,9 @@
 package com.example.microservices.todomicroservices.repository;
 
-import java.util.List;
-
+import com.example.microservices.todomicroservices.entities.ToDo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.microservices.todomicroservices.entities.ToDo;
+import java.util.List;
 
 public interface ToDoDao extends JpaRepository<ToDo, Integer> {
 
