@@ -32,7 +32,7 @@ public class HelloService {
 
     public User getRandomUser() {
         List<User> users = userDao.findAll();
-        return users.get(ThreadLocalRandom.current().nextInt(users.size()) % users.size());
+        return users.isEmpty() ? null : users.get(ThreadLocalRandom.current().nextInt(users.size()) % users.size());
     }
 
 }
