@@ -18,31 +18,6 @@ public class ToDoController implements ToDoEndpoint {
     @Autowired
     private ToDoService toDoService;
 
-    //@Override
-    public String getTodoInputById(Integer id) {
-        return toDoService.getDescriptionAndPriorityForToDo(id);
-    }
-
-    @Override
-    public String getRandomToDo() {
-        return toDoService.getDescriptionAndPriorityForRandomToDo();
-    }
-
-    @Override
-    public String toDoInput1(ToDo toDo) {
-        return toDoService.toDoInput(toDo);
-    }
-
-    @Override
-    public String toDoInput2(@Valid ToDo toDo) {
-        return toDoService.toDoInput(toDo);
-    }
-
-    @Override
-    public String toDoInput3(ToDo toDo, BindingResult result) {
-        return toDoService.toDoInputWithBindingValidation(toDo, result);
-    }
-
     @Override
     public ResponseEntity<JsonResponseBody> getToDos(HttpServletRequest request) {
         return toDoService.getToDos(request);
