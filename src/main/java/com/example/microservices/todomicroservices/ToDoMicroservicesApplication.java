@@ -44,14 +44,14 @@ public class ToDoMicroservicesApplication implements CommandLineRunner {
         userDao.save(createUser("otheremail@someotherprovider.com", "Marco Lewis", "stonehenge"));
         userDao.save(createUser("wicked@dummy.eu", "Danzo Kim", "shifTed"));
 
-        toDoDao.save(createToDo("some microservice related description", HIGH, "provider.com"));
-        toDoDao.save(createToDo("spring boot comin'", LOW, "provider.com"));
+        toDoDao.save(createToDo("some microservice related description", HIGH, "some.email@provider.com"));
+        toDoDao.save(createToDo("spring boot comin'", LOW, "some.email@provider.com"));
 
-        toDoDao.save(createToDo("Got some news", HIGH, "someotherprovider.com"));
-        toDoDao.save(createToDo("grocery", HIGH, "someotherprovider.com"));
+        toDoDao.save(createToDo("Got some news", HIGH, "otheremail@someotherprovider.com"));
+        toDoDao.save(createToDo("grocery", HIGH, "otheremail@someotherprovider.com"));
 
         toDoDao.save(createToDo("you have to see this!", HIGH, "dummy.eu"));
-        toDoDao.save(createToDo("bunny stuff", LOW, "dummy.eu"));
+        toDoDao.save(createToDo("bunny stuff", LOW, "wicked@dummy.eu"));
 
         LOGGER.info("H2 database filling has finished");
     }
