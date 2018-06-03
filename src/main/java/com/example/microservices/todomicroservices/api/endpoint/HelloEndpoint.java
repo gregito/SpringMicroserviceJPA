@@ -1,4 +1,4 @@
-package com.example.microservices.todomicroservices.controller.interfaces;
+package com.example.microservices.todomicroservices.api.endpoint;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 

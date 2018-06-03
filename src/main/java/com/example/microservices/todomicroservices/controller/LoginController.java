@@ -1,6 +1,6 @@
-package com.example.microservices.todomicroservices.controller.impl;
+package com.example.microservices.todomicroservices.controller;
 
-import com.example.microservices.todomicroservices.controller.interfaces.LoginEndpoint;
+import com.example.microservices.todomicroservices.api.endpoint.LoginEndpoint;
 import com.example.microservices.todomicroservices.service.LoginService;
 import com.example.microservices.todomicroservices.utilities.JsonResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;

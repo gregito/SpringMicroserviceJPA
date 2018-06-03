@@ -1,6 +1,6 @@
-package com.example.microservices.todomicroservices.controller.impl;
+package com.example.microservices.todomicroservices.controller;
 
-import com.example.microservices.todomicroservices.controller.interfaces.ToDoEndpoint;
+import com.example.microservices.todomicroservices.api.endpoint.ToDoEndpoint;
 import com.example.microservices.todomicroservices.entities.ToDo;
 import com.example.microservices.todomicroservices.service.ToDoService;
 import com.example.microservices.todomicroservices.utilities.JsonResponseBody;
