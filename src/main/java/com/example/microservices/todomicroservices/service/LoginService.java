@@ -23,7 +23,7 @@ import static org.springframework.http.HttpStatus.OK;
 @Service
 public class LoginService {
 
-    private static final long TOKEN_LIFESPAN = 300000L;
+    private static final long TOKEN_LIFESPAN = 1800000L;
 
     @Autowired
     private UserDao userDao;
