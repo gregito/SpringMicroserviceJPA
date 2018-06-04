@@ -5,6 +5,9 @@ import com.example.microservices.todomicroservices.service.LoginService;
 import com.example.microservices.todomicroservices.utilities.JsonResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -14,7 +17,8 @@ public class LoginController implements LoginEndpoint {
     private LoginService loginService;
 
     @Override
-    public ResponseEntity<JsonResponseBody> login(String email, String password) {
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<JsonResponseBody> login(@RequestParam("email") String email, @RequestParam("password") String password) {
         return loginService.login(email, password);
     }
 

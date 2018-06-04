@@ -2,11 +2,7 @@ package com.example.microservices.todomicroservices.service;
 
 import com.example.microservices.todomicroservices.entities.User;
 import com.example.microservices.todomicroservices.repository.UserDao;
-import com.example.microservices.todomicroservices.utilities.AccessDeniedException;
-import com.example.microservices.todomicroservices.utilities.EncryptionUtils;
-import com.example.microservices.todomicroservices.utilities.JsonResponseBody;
-import com.example.microservices.todomicroservices.utilities.JwtUtils;
-import com.example.microservices.todomicroservices.utilities.UserNotLoggedException;
+import com.example.microservices.todomicroservices.utilities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

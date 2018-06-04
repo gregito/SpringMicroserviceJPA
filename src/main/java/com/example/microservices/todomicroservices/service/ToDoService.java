@@ -11,14 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @Service
 public class ToDoService {
