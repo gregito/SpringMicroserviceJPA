@@ -1,8 +1,12 @@
 package com.example.microservices.todomicroservices.service;
 
+import com.example.microservices.todomicroservices.utilities.AuthenticationException;
 import com.example.microservices.todomicroservices.utilities.JwtUtils;
+import com.sun.org.apache.xml.internal.resolver.readers.ExtendedXMLCatalogReader;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -12,9 +16,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.Optional;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,6 +34,11 @@ public class VerificationServiceTest {
     private static final String EMAIL_KEY = "email";
 
     private static final String TEST_JWT = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJvdGhlcmVtYWlsQHNvbWVvdGhlcnByb3ZpZGVyL";
+
+    private static final String AUTH_EXCEPT_MESSAGE = "Forbidden";
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @InjectMocks
     private VerificationService underTest;
@@ -47,7 +58,11 @@ public class VerificationServiceTest {
     public void testVerifyUserWhenUnableToObtainJwtFromRequestThenFalseReturns() throws UnsupportedEncodingException {
         when(jwtUtils.getJwtFromHttpRequest(request)).thenReturn(Optional.empty());
 
-        assertFalse(underTest.verifyUser(request, TEST_EMAIL));
+        expectedException.expect(AuthenticationException.class);
+        expectedException.expectMessage(AUTH_EXCEPT_MESSAGE);
+
+        underTest.verifyUser(request, TEST_EMAIL);
+
         verify(jwtUtils, times(1)).getJwtFromHttpRequest(request);
         verify(jwtUtils, times(0)).jwt2Map(any(String.class));
     }
@@ -57,7 +72,11 @@ public class VerificationServiceTest {
         when(jwtUtils.getJwtFromHttpRequest(request)).thenReturn(Optional.of(INVALID_JWT));
         when(jwtUtils.jwt2Map(INVALID_JWT)).thenReturn(Collections.emptyMap());
 
-        assertFalse(underTest.verifyUser(request, TEST_EMAIL));
+        expectedException.expect(AuthenticationException.class);
+        expectedException.expectMessage(AUTH_EXCEPT_MESSAGE);
+
+        underTest.verifyUser(request, TEST_EMAIL);
+
         verify(jwtUtils, times(1)).getJwtFromHttpRequest(request);
         verify(jwtUtils, times(1)).jwt2Map(INVALID_JWT);
     }
@@ -68,7 +87,11 @@ public class VerificationServiceTest {
         when(jwtUtils.getJwtFromHttpRequest(request)).thenReturn(Optional.of(TEST_JWT));
         when(jwtUtils.jwt2Map(TEST_JWT)).thenReturn(Collections.singletonMap(EMAIL_KEY, otherEmail));
 
-        assertFalse(underTest.verifyUser(request, TEST_EMAIL));
+        expectedException.expect(AuthenticationException.class);
+        expectedException.expectMessage(AUTH_EXCEPT_MESSAGE);
+
+        underTest.verifyUser(request, TEST_EMAIL);
+
         verify(jwtUtils, times(1)).getJwtFromHttpRequest(request);
         verify(jwtUtils, times(1)).jwt2Map(TEST_JWT);
     }
@@ -78,7 +101,12 @@ public class VerificationServiceTest {
         when(jwtUtils.getJwtFromHttpRequest(request)).thenReturn(Optional.of(TEST_JWT));
         when(jwtUtils.jwt2Map(TEST_JWT)).thenThrow(new UnsupportedEncodingException());
 
-        assertFalse(underTest.verifyUser(request, TEST_EMAIL));
+        expectedException.expect(AuthenticationException.class);
+        expectedException.expectCause(is(UnsupportedEncodingException.class));
+        expectedException.expectMessage(AUTH_EXCEPT_MESSAGE);
+
+        underTest.verifyUser(request, TEST_EMAIL);
+
         verify(jwtUtils, times(1)).getJwtFromHttpRequest(request);
         verify(jwtUtils, times(1)).jwt2Map(TEST_JWT);
     }
@@ -88,7 +116,8 @@ public class VerificationServiceTest {
         when(jwtUtils.getJwtFromHttpRequest(request)).thenReturn(Optional.of(TEST_JWT));
         when(jwtUtils.jwt2Map(TEST_JWT)).thenReturn(Collections.singletonMap(EMAIL_KEY, TEST_EMAIL));
 
-        assertTrue(underTest.verifyUser(request, TEST_EMAIL));
+        underTest.verifyUser(request, TEST_EMAIL);
+
         verify(jwtUtils, times(1)).getJwtFromHttpRequest(request);
         verify(jwtUtils, times(1)).jwt2Map(TEST_JWT);
     }
