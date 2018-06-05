@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -26,6 +27,9 @@ public class ToDoService {
 
     @Autowired
     private ToDoValidator toDoValidator;
+
+    @Autowired
+    private VerificationService verificationService;
 
     public ResponseEntity<JsonResponseBody> getToDos(HttpServletRequest request) {
         try {
@@ -51,8 +55,12 @@ public class ToDoService {
     }
 
     public ResponseEntity<JsonResponseBody> delete(HttpServletRequest request, Integer id) {
-        loginService.verifyJwtAndGetData(request);
+        Optional<ToDo> toDo = toDoDao.findById(id);
+        if (!toDo.isPresent()) {
+            return ResponseEntity.status(FORBIDDEN).body(new JsonResponseBody(FORBIDDEN.value(), "Forbidden"));
+        }
         try {
+            verificationService.verifyUser(request, toDo.get().getUser());
             loginService.verifyJwtAndGetData(request);
             toDoDao.deleteById(id);
             return ResponseEntity.ok(new JsonResponseBody(OK.value(), "Success"));
@@ -60,6 +68,5 @@ public class ToDoService {
             return ResponseEntity.status(FORBIDDEN).body(new JsonResponseBody(FORBIDDEN.value(), e.getMessage()));
         }
     }
-
 
 }

@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class JwtUtils {
@@ -45,7 +46,7 @@ public class JwtUtils {
         return userData;
     }
 
-    public String getJwtFromHttpRequest(HttpServletRequest request) {
+    public Optional<String> getJwtFromHttpRequest(HttpServletRequest request) {
         String jwt = null;
         if (request.getHeader("jwt") != null) {
             jwt = request.getHeader("jwt");
@@ -57,7 +58,7 @@ public class JwtUtils {
                 }
             }
         }
-        return jwt;
+        return Optional.ofNullable(jwt);
     }
 
 }

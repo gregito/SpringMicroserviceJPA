@@ -3,6 +3,8 @@ package com.example.microservices.todomicroservices.utilities;
 import org.jasypt.util.text.BasicTextEncryptor;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class EncryptionUtils {
 
@@ -10,7 +12,7 @@ public class EncryptionUtils {
 
     public EncryptionUtils() {
         textEncryptor = new BasicTextEncryptor();
-        textEncryptor.setPassword("myEncryptiorPassword");
+        textEncryptor.setPassword(String.valueOf(new Date().getTime()));
     }
 
     public String encrypt(String data) {

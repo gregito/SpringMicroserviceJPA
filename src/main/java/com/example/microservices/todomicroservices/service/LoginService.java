@@ -19,6 +19,7 @@ import static org.springframework.http.HttpStatus.OK;
 @Service
 public class LoginService {
 
+    // 30 min
     private static final long TOKEN_LIFESPAN = 1800000L;
 
     @Autowired
@@ -40,9 +41,9 @@ public class LoginService {
         }
     }
 
-    public Map<String, Object> verifyJwtAndGetData(HttpServletRequest request) {
+    Map<String, Object> verifyJwtAndGetData(HttpServletRequest request) {
         try {
-            String jwt = Optional.ofNullable(jwtUtils.getJwtFromHttpRequest(request))
+            String jwt = jwtUtils.getJwtFromHttpRequest(request)
                     .orElseThrow(() -> new UserNotLoggedException("User has not logged in! Login first!"));
             return jwtUtils.jwt2Map(jwt);
         } catch (UnsupportedEncodingException e) {
@@ -57,14 +58,6 @@ public class LoginService {
         } catch (UnsupportedEncodingException e) {
             throw new AccessDeniedException("Invalid token parameters!", e);
         }
-    }
-
-    private User getUser(String email, String pwd) {
-        Optional<User> user = userDao.findUserByEmail(email);
-        if (!user.isPresent() || !encryptionUtils.encrypt(pwd).equals(user.get().getPassword())) {
-            throw new AccessDeniedException("Invalid username or password!");
-        }
-        return user.get();
     }
 
 }
