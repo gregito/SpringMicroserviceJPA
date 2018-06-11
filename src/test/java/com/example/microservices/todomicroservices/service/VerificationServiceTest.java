@@ -2,7 +2,6 @@ package com.example.microservices.todomicroservices.service;
 
 import com.example.microservices.todomicroservices.utilities.AuthenticationException;
 import com.example.microservices.todomicroservices.utilities.JwtUtils;
-import com.sun.org.apache.xml.internal.resolver.readers.ExtendedXMLCatalogReader;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,13 +16,8 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class VerificationServiceTest {
 

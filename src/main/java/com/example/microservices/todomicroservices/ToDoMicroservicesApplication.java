@@ -32,9 +32,9 @@ public class ToDoMicroservicesApplication implements CommandLineRunner {
     @Autowired
     private EncryptionUtils encryptionUtils;
 
-	public static void main(String[] args) {
-		SpringApplication.run(ToDoMicroservicesApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ToDoMicroservicesApplication.class, args);
+    }
 
     @Override
     public void run(String... args) {
